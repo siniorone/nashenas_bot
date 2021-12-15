@@ -1,0 +1,19 @@
+{
+    "_comment": "This JSON file is stored for testing purposes in order to become familiar with the structure of messages received by the bot. ",
+    "message_id": 19,
+    "from": {
+        "id": 637731573,
+        "is_bot": false,
+        "first_name": "sina",
+        "username": "siniorone",
+        "language_code": "en"
+    },
+    "chat": {
+        "id": 637731573,
+        "first_name": "sina",
+        "username": "siniorone",
+        "type": "private"
+    },
+    "date": 1639418245,
+    "text": "sadsdas"
+}
