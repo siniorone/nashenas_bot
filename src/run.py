@@ -3,6 +3,7 @@ from loguru import logger
 
 from src.utils.constant import keyboards
 from src.utils.filters import IsAdmin
+from src.utils.db import db
 from utils.bot import bot
 
 
@@ -10,7 +11,6 @@ class Bot(object):
     """
     This class is a template for building a telegram bot.
     """
-
     def __init__(self, bot):
         logger.info("Bot Started ...")
         # Create Bot
@@ -30,8 +30,13 @@ class Bot(object):
             A welcome message is sent to the user
             who has just hit the bot start button.
             """
-            logger.info(f"Sending message to user = {message.from_user.id}")
-            self.bot.reply_to(message, f"Hello {message.chat.first_name}!")
+            logger.info(f"Sending Welcome Message to user = {message.from_user.id}")
+            self.send_message(message.chat.id, f"Hello <strong>{message.chat.first_name}</strong>!")
+            db.users.update_one(
+                {'chat.id': message.chat.id},
+                {'$set': message.json},
+                upsert=True
+            )
 
         @self.bot.message_handler(is_admin=True)
         def admin_of_group(message):
