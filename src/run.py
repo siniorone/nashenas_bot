@@ -62,7 +62,6 @@ class Bot(object):
             )
             if not other_user:
                 return
-            print(other_user)
             self.update_status(other_user['chat']['id'], states.connected)
             self.update_status(message.chat.id, states.connected)
             self.update_db(other_user['chat']['id'], 'connected_to', message.chat.id)
@@ -92,8 +91,18 @@ class Bot(object):
             if user['states'] == states.connected:
                 self.update_status(user['connected_to'], states.main)
                 self.update_db(user['connected_to'], 'connected_to', None)
+                self.send_message(
+                    user['connected_to'],
+                    "your connection was terminated!",
+                    reply_markup=keyboards.main
+                )
             self.update_status(message.chat.id, states.main)
             self.update_db(message.chat.id, 'connected_to', None)
+            self.send_message(
+                    message.chat.id,
+                    "your connection was terminated!",
+                    reply_markup=keyboards.main
+                )
 
         @self.bot.message_handler(is_admin=True)
         def admin_of_group(message):
